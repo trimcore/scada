@@ -1,2 +1,2 @@
-# scada
-SCADA SYSTEM - binaries, documentation, public API
+*TRIM CORE SOFTWARE s.r.o.*
+# ∆ SCADA System public module API
