@@ -1,2 +1,2 @@
 *TRIM CORE SOFTWARE s.r.o.*
-# ∆ SCADA System public module API
+# ∆ SCADA SYSTEM - public module API, documentation, binary releases
