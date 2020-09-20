@@ -40,7 +40,7 @@ Strings can contain only characters a-z, A-Z, 0-9 and space/dash/underscore. The
 Character | Encoding | Character | Encoding
 -|-|-|-
 *space* /- / _ | 0x00 | A | 0x01 0x00
-  |      | B | 0x01 0x01
+  |      | B | 0x01 0x01
 a | 0x02 | C | 0x01 0x02
 b | 0x03 | D | 0x01 0x03
 c | 0x04 | E | 0x01 0x04
