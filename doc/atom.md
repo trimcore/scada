@@ -10,6 +10,11 @@ Atoms are compared as simple 64-bit unsigned integers.
 AtomPath in general is a sequence of Atoms used to represent [Directory](directory.md) path, or group of Atoms for other purposes.
 The [API](../api) provides [AtomPath](AtomPath.md) class to simplify path manipulation (see documentation for limits).
 
+## Usage
+
+Atoms are integral part of API when implementing modules. Names of both cells and directory levels in [Directory](../doc/directory.md)
+use Atoms. Restrictions on Atoms apply when editing [configuration](cfg.md) files, as those simply specify initial contents of the directory.
+
 ## Parsing
 
 Input consisting of decimal or hexadecimal (prefix `#x`) digits is stored as a numeric Atom, otherwise parsing as string is attempted (if not prevented by `#` prefix).
