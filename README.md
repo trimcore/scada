@@ -13,9 +13,9 @@ TBD: about SCADA software
 
 ## Microsoft Visual C++ runtime redistributables
 
-* [14.26 x86-64](redist/msvc_redist_x64_14.26.exe)
-* [14.26 x86-32](redist/msvc_redist_x84_14.26.exe)
-* [14.26 AArch64](redist/msvc_redist_arm64_14.26.exe)
+* [14.26 x86-64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x64_14.26.exe)
+* [14.26 x86-32](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x84_14.26.exe)
+* [14.26 AArch64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_arm64_14.26.exe)
 
 ## Documentation
 
@@ -27,7 +27,7 @@ TBD: about SCADA software
 
 ## Tools
 
-* atom.exe - converts raw 64-bit atom value to/from string number
+* [atom.exe](https://github.com/trimcore/scada/raw/master/tools/atom.exe) - converts raw 64-bit atom value to/from string number
 
 ## License
 
