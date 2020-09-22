@@ -27,7 +27,7 @@ TBD: about SCADA software
 
 ## Tools
 
-* [atom.exe](https://github.com/trimcore/scada/raw/master/tools/atom.exe) - converts raw 64-bit atom value to/from string number
+* [atom.exe](https://github.com/trimcore/scada/raw/master/tools/Atom.exe) - converts raw 64-bit atom value to/from string number
 
 ## License
 
