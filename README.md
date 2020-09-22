@@ -1,5 +1,5 @@
 ﻿*TRIM CORE SOFTWARE s.r.o.*
-# ∆ SCADA SYSTEM - public API, documentation, binary releases
+# ∆ SCADA SYSTEM - public API, documentation, releases
 
 This repository contains latest binaries for the SCADA software, usage documentation, and public module API.
 
@@ -11,11 +11,11 @@ TBD: about SCADA software
 
 /exe/...
 
-## Third party redistributables
+## Microsoft Visual C++ runtime redistributables
 
-* x86-64 /redist/msvc_redist_x64_14.26.exe
-* AArch64 /redist/msvc_redist_arm64_14.26.exe
-* x86-32 /redist/msvc_redist_x84_14.26.exe - not currently available
+* [14.26 x86-64](redist/msvc_redist_x64_14.26.exe)
+* [14.26 x86-32](redist/msvc_redist_x84_14.26.exe)
+* [14.26 AArch64](redist/msvc_redist_arm64_14.26.exe)
 
 ## Documentation
 
