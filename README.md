@@ -19,11 +19,11 @@ TBD: about SCADA software
 * [14.26 x86-32](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x84_14.26.exe)
 * [14.26 AArch64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_arm64_14.26.exe)
 
-## [Documentation](doc/README.md)
+## [Documentation](doc)
 
 /doc/...
 
-## [API](api/README.md)
+## [API](api)
 
 /api/...
 
