@@ -29,7 +29,7 @@ TBD: about SCADA software
 
 ## Tools
 
-* [installer](exe/installer/README.md) - generic service installer
+* [installer](exe/installer) - generic service installer
 * [atom.exe](https://github.com/trimcore/scada/raw/master/tools/Atom.exe) - converts raw 64-bit atom value to/from string number
 
 ## License
