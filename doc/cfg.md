@@ -3,7 +3,7 @@
 
 The purpose of .cfg files is to pre-create [Directory](directory.md) levels and named Cells, that are,
 upon initialization of the software and loaded modules, used to actually initialize ty system and solution
-it is modeling.
+it is modeling. After the configuration is loaded, the system is [bootstrapped](boot.md).
 
 First configuration file loaded is **SCADA.cfg** which may reference other files.  
 
@@ -48,7 +48,12 @@ appropriate restrictions on names apply.
 
 ## Directory paths
 
-`aa/bb/cc:`
+Slash-separated list of atoms `aa/bb/cc:` terminated by colon. Each atom represents nested level in
+[Directory of named Cells](directory.md). The directory path is set for all subsequently following
+cell definitions.
+
+Only a small number of top-level levels can be created. Number of nested levels is generally not limited,
+but huge number of cells or sub-levels in one directory can hinder performance; prefer deeper nesting.
 
 ## Cell definitions
 
@@ -56,9 +61,12 @@ appropriate restrictions on names apply.
 
 ### NULL
 
+Lowercase `null` specifies cell that contains no value. NULL is separate data type.
+NULL cells can still be signalled, carry timestamp or specify flags.
+
 ### Numeric values
 
-Integer syntax: [0b|0o|0x] \# [u|i][k|K|M|G|T] [:[**N**<x|×>][**W**]]
+Integers: [0b|0o|0x] \# [u|i][k|K|M|G|T] [:[**N**<x|×>][**W**]]
 
 Floats: \#.\# [u|i][k|K|M|G|T] [:[**N**<x|×>][**W**]]
 
@@ -66,25 +74,33 @@ Floats: \#.\# [u|i][k|K|M|G|T] [:[**N**<x|×>][**W**]]
 * \#[.\#] - the number, integer or float
 * i - integer is signed (default)
 * u - integer is unsigned (overrides any `i`)
-* k|K|M|G|T - multipliers (e.g.: 1k = 1024)
+* k|K|M|G|T - multipliers (e.g.: 1k = 1024, 1M = 1048576)
 * **N** - specifies vector width, default is 1
 * **W** - specifies storage width, in bits; supported widths are: 1, 8, 16, 32, 64 (default) for integers, 32 and 64 for floats
 
 Constants true/false are aliases to 1u:1/0u:1 respectively.
 
+Limits: Some combinations of parameters are not supported, the loader will log warning.
+
 ### Strings
 
 Syntax: "text" [storage]
 
-Storage:
+String rules on double quotes described above apply. Optional storage specification defines how the string is stored in memory.
 
-* **utf-8** -
-* **utf-16** - 
-* **ascii** -
+Storage types available (may also be lowercase):
+
+* **UTF-8**
+* **UTF-16**
+* **ASCII** - string is restricted to 7-bit ASCII characters, international characters are skipped
+
+String limits currently stem from 32 byte cell data limit.
 
 ### Binary blobs
 
 Syntax: $ followed by pairs of hexadecimal digits, optionally separated by space, tab, colon, comma or dash.
+
+Binary blobs are currently limited to 32 bytes.
 
 ### Atoms/AtomPaths
 
