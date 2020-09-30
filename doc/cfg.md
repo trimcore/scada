@@ -95,21 +95,28 @@ Storage types available (may also be lowercase):
 * **ASCII** - string is restricted to 7-bit ASCII characters, international characters are skipped
 
 String limits currently stem from 32 byte cell data limit.
+Strings are assigned directly, the storage type changes dynamically and optionally converted on read.
 
 ### Binary blobs
 
-Syntax: $ followed by pairs of hexadecimal digits, optionally separated by space, tab, colon, comma or dash.
+Syntax: `$` followed by pairs of hexadecimal digits, optionally separated by space, tab, colon, comma or dash.
 
 Binary blobs are currently limited to 32 bytes.
 
 ### Atoms/AtomPaths
 
+Atom Path definition starts with `/` character and 0 to 4 `/`-separated Atoms, optionally ending with `:` (ignored, for convenience only).
+
 ### Date/Time
 
-### IP Addresses
+The configuration format is currently limited to a single `T` which creates Date/Time type cell to be assigned
+value later in code.
 
+### Addresses
+
+IP Addresses: <IP[v4]|IPv6> **address**[:**port**]
 
 ## Notes
 
 * no macros or automatic replacements are currently supported
-* file nesting and configuration file sizes are limited by available memory
+* file nesting and configuration file sizes are limited only by available memory
