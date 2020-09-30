@@ -5,15 +5,15 @@
 
 CPU ISA
 * x86-64 - SSE 4.1/CMPXCHG16B
- * Intel Core/[Penryn](https://en.wikipedia.org/wiki/Penryn_(microarchitecture)) (2008+)
- * AMD Bulldozer/Jaguar (2011+)
+  * Intel Core/[Penryn](https://en.wikipedia.org/wiki/Penryn_(microarchitecture)) (2008+)
+  * AMD Bulldozer/Jaguar (2011+)
 * x86-32 - SSE 4.1
 * AArch64 - ARM v8 CRC32, AES, SHA1, FMAC and NEON vector extensions
- * Qualcomm Snapdragon 835 (2017+)
+  * Qualcomm Snapdragon 835 (2017+)
 
 2 hardware threads
-* 2 cores or 1 core with HT/SMT), *logical processors* in Windows kernel nomenclature
-* Note when allocating resources for Virtual Machine
+* 2 cores or 1 core with HT/SMT), *logical processors* in Windows kernel nomenclature  
+  *Note this especially when allocating resources for Virtual Machine*
 
 1 GB of RAM
 * TBD: lock, 2MB/1GB pages, see [Additional Privileges](privileges.md) on how to enable
