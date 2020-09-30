@@ -9,23 +9,21 @@ TBD: about SCADA software
 
 ## Binaries
 
-* [x86-64](exe/x86-64)
-* [x86-32](exe/x86-32)
-* [AArch64](exe/AArch64)
+* [/scada/exe/x86-64](exe/x86-64)
+* [/scada/exe/x86-32](exe/x86-32)
+* [/scada/exe/AArch64](exe/AArch64)
 
 ## Microsoft Visual C++ runtime redistributables
 
-* [14.26 x86-64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x64_14.26.exe)
-* [14.26 x86-32](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x84_14.26.exe)
-* [14.26 AArch64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_arm64_14.26.exe)
+* [/scada/redist](https://github.com/trimcore/scada/tree/master/redist)
 
-## [Documentation](doc)
+## Documentation
 
-/doc/...
+* [/scada/doc](doc)
 
-## [API](api)
+## API
 
-/api/...
+* [/scada/api](api)
 
 ## Tools
 
