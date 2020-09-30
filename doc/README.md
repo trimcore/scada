@@ -5,10 +5,14 @@
 
 TBD: ...
 
+* [HW/SW Requirements](requirements.md)
+* [Version History](history.md)
+
 ## Installation and configuration
 
 * [Additional Privileges](privileges.md)
 * [Configuration files](cfg.md)
+* [Bootstrap and conventions](boot.md)
 
 ## Internal data representation summary:
 
