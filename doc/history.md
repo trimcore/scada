@@ -8,7 +8,9 @@ API/ABI is expected to stabilize with 0.5 release.
 
 ### 0.4.18
 
-* TBD...
+* improved named cell directory efficiency and level capacity
+* fixed datagram receiver request buffer size to fit last slot
+* fixed primary segment to fully utilize allocated memory
 
 ### 0.4.17
 
