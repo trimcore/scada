@@ -32,9 +32,9 @@ Testing is currently performed on following SKUs:
 *NOTE: Consider strong licensing restrictions and limitations that apply to non-Windows SKUs.*
 
 ### [Microsoft Visual C++ runtime redistributables](https://github.com/trimcore/scada/tree/master/redist)
-* [14.26 x86-64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x64_14.26.exe)
-* [14.26 x86-32](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x84_14.26.exe)
-* [14.26 AArch64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_arm64_14.26.exe)
+* [14.27 x86-64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x64_14.27.exe)
+* [14.27 x86-32](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x84_14.27.exe)
+* [14.27 AArch64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_arm64_14.27.exe)
 
 ### TRIMCORE Software Management Service
 
