@@ -5,7 +5,8 @@ This repository contains latest binaries for the SCADA software, usage documenta
 
 ## About
 
-TBD: about SCADA software
+TRIM CORE SCADA Software provides scalable high-performance implementation of networking and live data storage facilities
+as a base for specialized communication solutions.
 
 ## Binaries
 
@@ -32,4 +33,4 @@ TBD: about SCADA software
 
 ## License
 
-TBD: usage, limitations, licensing for commercial use
+TBD: terminology, usage, limitations, licensing for commercial use
