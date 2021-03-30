@@ -1,0 +1,87 @@
+﻿<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+    <Type Name="Scada::Atom">
+        <DisplayString Condition="numeric==true">#{value}</DisplayString>
+        <DisplayString Condition="numeric!=true">...</DisplayString>
+        <!-- TODO: implement in DLL -->
+        <Expand>
+            <CustomListItems Condition="numeric!=true" >
+                <Variable Name="i" InitialValue="0u" />
+                <Variable Name="n" InitialValue="0u" />
+                <Variable Name="length" InitialValue="0u" />
+                <Variable Name="codepoint" InitialValue="0u" />
+
+                <Loop Condition="i &lt; 12">
+                    <If Condition="(value &gt;&gt; (5 * i++) &amp; 0x1F) != 0">
+                        <Exec>length = i</Exec>
+                    </If>
+                </Loop>
+
+                <Exec>i = 0</Exec>
+
+                <Loop Condition="i &lt; length">
+                    <Exec>codepoint = value &gt;&gt; (5 * i++) &amp; 0x1F</Exec>
+                    <If Condition="codepoint == 0x01">
+                        <Exec>++i</Exec>
+                    </If>
+                    <Exec>++n</Exec>
+                </Loop>
+
+                <Item Name="[Size (code units, max 12)]">length</Item>
+                <Item Name="[Length (characters)]">n</Item>
+
+                <Exec>i = 0</Exec>
+                <Exec>n = 0</Exec>
+
+                <Loop Condition="i &lt; length">
+                    <Exec>codepoint = value &gt;&gt; (5 * i++) &amp; 0x1F</Exec>
+
+                    <If Condition="codepoint == 0x00">
+                        <Item Name="[{n}]">' ',c</Item>
+                    </If>
+                    <If Condition="codepoint &gt;= 0x02 &amp;&amp; codepoint &lt; 0x1C">
+                        <Item Name="[{n}]"> (char)('a' + codepoint - 0x02),c </Item>
+                    </If>
+                    <If Condition="codepoint &gt;= 0x1C">
+                        <Item Name="[{n}]"> (char)('0' + codepoint - 0x1C),c </Item>
+                    </If>
+
+                    <If Condition="codepoint == 0x01">
+                        <Exec>codepoint = value &gt;&gt; (5 * i++) &amp; 0x1F</Exec>
+
+                        <If Condition="codepoint &lt; 0x1A">
+                            <Item Name="[{n}]"> (char)('A' + codepoint),c </Item>
+                        </If>
+                        <If Condition="codepoint &gt;= 0x1A">
+                            <Item Name="[{n}]"> (char)('4' + codepoint - 0x1A),c </Item>
+                        </If>
+                    </If>
+
+                    <Exec>++n</Exec>
+                </Loop>
+
+                <Exec>i = 0</Exec>
+                <Exec>n = 0</Exec>
+
+                <Loop Condition="i &lt; length">
+                    <Exec>codepoint = value &gt;&gt; (5 * i++) &amp; 0x1F</Exec>
+                    <If Condition="codepoint != 0x01">
+                        <Item Name="[CP₁ {n}]">(unsigned short) codepoint,X</Item>
+                    </If>
+                    <If Condition="codepoint == 0x01">
+                        <Exec>codepoint &lt;&lt;= 8</Exec>
+                        <Exec>codepoint |= value &gt;&gt; (5 * i++) &amp; 0x1F</Exec>
+                        <Item Name="[CP₂ {n}]">(unsigned short) codepoint,X</Item>
+                    </If>
+                    <Exec>++n</Exec>
+                </Loop>
+            </CustomListItems>
+        </Expand>
+    </Type>
+
+    <Type Name="Scada::RwSpinLock">
+        <DisplayString Condition="state==0">Unlocked</DisplayString>
+        <DisplayString Condition="state==1">Locked for reading (share)</DisplayString>
+        <DisplayString Condition="state>=2">Locked for reading (shared by {state} readers)</DisplayString>
+        <DisplayString Condition="state==-1">Locked for writing (exclusive)</DisplayString>
+    </Type>
+</AutoVisualizer>
