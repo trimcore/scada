@@ -21,20 +21,20 @@ CPU ISA
 ## Software
 ### Operating System
 
-NT 6.2 kernel based or newer.  
+NT 6.3 kernel based or newer.  
 Testing is currently performed on following SKUs:
 
-* [Windows Server](https://www.microsoft.com/cs-cz/windows-server) 2012 R2, 2016 and 2019
-* Windows 8.1, Windows 10 - **no support will be provided for deployments on client SKUs**
+* [Windows Server](https://www.microsoft.com/cs-cz/windows-server) 2012 R2, 2016, 2019 and 2022
+* Windows 8.1, Windows 10 LTSC, Windows 11 - **no support will be provided for deployments on client SKUs**
 * [Hyper-V Server](https://www.microsoft.com/en-us/evalcenter/evaluate-hyper-v-server-2019) 2016 and 2019
-* [Azure Stack HCI](https://azure.microsoft.com/en-us/products/azure-stack/hci/)
+* [Azure Stack HCI](https://azure.microsoft.com/en-us/products/azure-stack/hci/) 17784 and 20348
 
 *NOTE: Consider strong licensing restrictions and limitations that apply to non-Windows SKUs.*
 
 ### [Microsoft Visual C++ runtime redistributables](https://github.com/trimcore/scada/tree/master/redist)
-* [14.27 x86-64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x64_14.27.exe)
-* [14.27 x86-32](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_x84_14.27.exe)
-* [14.27 AArch64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_arm64_14.27.exe)
+* [14.29 x86-64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_14.29.30037_x86-64.exe)
+* [14.29 x86-32](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_14.29.30037_x86-32.exe)
+* [14.29 AArch64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_14.29.30037_AArch64.exe)
 
 ### TRIMCORE Software Management Service
 
@@ -46,5 +46,3 @@ Service installed and running with Licensing functions enabled.
 ## License
 
 TBD
-
-
