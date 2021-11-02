@@ -9,7 +9,7 @@ namespace Scada::ABI {
     //  - creates a simple new cell to store 1 value of provided type/size
     //
     SCADA_DLL_IMPORT Cell::Handle Api1CellCreate (const Atom * path, std::size_t depth,
-                                                  Cell::Information::Type type, std::uint8_t size) noexcept;
+                                                  Cell::Type type, std::uint8_t size) noexcept;
 
     // Api1CellCreateTemplate
     //  - creates new cell using 'template' to initialize the data
@@ -53,7 +53,12 @@ namespace Scada::ABI {
     //  - retrieves current data type of the cell
     //  - data type is supposed to be stable/immutable, but e.g. data type of cell loaded from settings might not be known
     //
-    SCADA_DLL_IMPORT Cell::DataType Api1CellGetDataType (Cell::Handle handle) noexcept;
+    SCADA_DLL_IMPORT Cell::Specs Api1CellGetDataType (Cell::Handle handle) noexcept;
+
+    // Api1CellGetUpdateTime
+    //  - 
+    //
+    SCADA_DLL_IMPORT FILETIME Api1CellGetUpdateTime (Cell::Handle handle) noexcept;
 
     // Api1Cell[Res|S]etInvalidFlag
     //  - 
@@ -84,6 +89,7 @@ namespace Scada::ABI {
     // Api1CellSetUnsigned[n]
     //  - 
     //  - returns true on success, false on ...???
+    //     - 'values' is unaffected on failure
     //
     SCADA_DLL_IMPORT bool Api1CellSetUnsigned64 (Cell::Handle handle, const std::uint64_t * values, std::size_t n) noexcept;
     SCADA_DLL_IMPORT bool Api1CellUpdateUnsigned64 (Cell::Handle handle, const std::uint64_t * values, std::size_t n) noexcept;
@@ -156,7 +162,7 @@ namespace Scada::ABI {
     SCADA_DLL_IMPORT bool Api1CellUpdateAddress (Cell::Handle handle, const Manifold::Address * address) noexcept;
 
     
-    SCADA_DLL_IMPORT bool Api1CellGetTimeStamp (Cell::Handle handle, FILETIME *) noexcept;
+    SCADA_DLL_IMPORT bool Api1CellGetTimeStamp (Cell::Handle handle, _Out_ FILETIME *) noexcept;
     SCADA_DLL_IMPORT bool Api1CellSetTimeStamp (Cell::Handle handle, const FILETIME *) noexcept;
     SCADA_DLL_IMPORT bool Api1CellUpdateTimeStamp (Cell::Handle handle, const FILETIME *) noexcept;
 

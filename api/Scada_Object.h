@@ -54,7 +54,7 @@ namespace Scada {
         using ObjectSpecialization <T>::operator =;
 
         // TODO: implement also as overriding; user inherits from Object<bool>, overrides 'OnChange' and calls 'listen'
-        bool listen (void (*callback) (void * context, Cell::Handle handle, FILETIME t, Cell::Flags flags, Cell::DataType, Cell::Information value), void * context) const noexcept {
+        bool listen (void (*callback) (void * context, Cell::Handle handle, FILETIME t, Cell::Information value), void * context) const noexcept {
             return ABI::Api1CellListen (this->handle, callback, context);
         }
         bool valid () const noexcept {
@@ -84,7 +84,7 @@ namespace Scada {
             return *this;
         }
     public:
-        operator bool () {
+        operator bool () const {
             bool value = false;
             if (!ABI::Api1CellGetBoolean (this->GetHandle (), &value)) {
                 this->throw_on_failure ();
@@ -103,7 +103,7 @@ namespace Scada {
             return *this;
         }
     public:
-        operator std::uint64_t () {
+        operator std::uint64_t () const {
             std::uint64_t value = 0;
             if (!ABI::Api1CellGetUnsigned64 (this->GetHandle (), &value, 1u)) {
                 this->throw_on_failure ();
@@ -122,7 +122,7 @@ namespace Scada {
             return *this;
         }
     public:
-        operator std::uint32_t () {
+        operator std::uint32_t () const {
             std::uint64_t value = 0;
             if (!ABI::Api1CellGetUnsigned64 (this->GetHandle (), &value, 1u)) {
                 this->throw_on_failure ();
@@ -141,7 +141,7 @@ namespace Scada {
             return *this;
         }
     public:
-        operator std::uint16_t () {
+        operator std::uint16_t () const {
             std::uint64_t value = 0;
             if (!ABI::Api1CellGetUnsigned64 (this->GetHandle (), &value, 1u)) {
                 this->throw_on_failure ();
@@ -160,7 +160,7 @@ namespace Scada {
             return *this;
         }
     public:
-        operator std::uint8_t () {
+        operator std::uint8_t () const {
             std::uint64_t value = 0;
             if (!ABI::Api1CellGetUnsigned64 (this->GetHandle (), &value, 1u)) {
                 this->throw_on_failure ();
@@ -180,7 +180,7 @@ namespace Scada {
             return *this;
         }
     public:
-        operator float () {
+        operator float () const {
             float value = 0.0;
             if (!ABI::Api1CellGetFloat32 (this->GetHandle (), &value, 1u)) {
                 this->throw_on_failure ();
@@ -201,7 +201,7 @@ namespace Scada {
             return *this;
         }
     public:
-        operator double () {
+        operator double () const {
             double value = 0.0;
             if (!ABI::Api1CellGetFloat64 (this->GetHandle (), &value, 1u)) {
                 this->throw_on_failure ();
@@ -222,7 +222,7 @@ namespace Scada {
             return *this;
         }
     public:
-        operator std::string () {
+        operator std::string () const {
             char buffer [32];
             auto length = ABI::Api1CellGetStringA (this->GetHandle (), buffer, sizeof buffer);
             if (length == 0) {
@@ -242,7 +242,7 @@ namespace Scada {
             return *this;
         }*/
     public:
-        AtomPath get () const noexcept {
+        AtomPath get () const {
             AtomPath path;
             Atom::InvalidInputReason reason;
             path.depth = ABI::Api1CellConvertToAtoms (this->GetHandle (), path.data (), 65536 / sizeof (Atom), &reason);
@@ -250,7 +250,7 @@ namespace Scada {
             return path;
         }
 
-        operator AtomPath () {
+        operator AtomPath () const {
             AtomPath path;
             Atom::InvalidInputReason reason;
             path.depth = ABI::Api1CellConvertToAtoms (this->GetHandle (), path.data (), 65536 / sizeof (Atom), &reason);

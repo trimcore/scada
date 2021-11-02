@@ -12,7 +12,7 @@ namespace Scada::ABI {
     //  - state of other cells is unspecified, dependent cells may be updated before, after or in parallel to the callback
     //
     SCADA_DLL_IMPORT bool Api1CellListen (Cell::Handle cell,
-                                          void (*callback) (void * context, Cell::Handle handle, FILETIME t, Cell::Flags flags, Scada::Cell::DataType, Cell::Information value),
+                                          void (*callback) (void * context, Cell::Handle handle, FILETIME t, Cell::Information value),
                                           void * context) noexcept;
 
     // Api1DirListenSub

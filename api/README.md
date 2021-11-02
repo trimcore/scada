@@ -17,9 +17,9 @@ TBD: version
 ## General API
 
 * Scada::GetManifoldName
-* Scada::ABI::ApiVersion
-* Scada::ABI::ApiDeclareSupport
-* Scada::ABI::ApiRequireSupport
+* Scada::ABI::ScadaApiVersion
+* Scada::ABI::ScadaDeclareSupport
+* Scada::ABI::ScadaRequireSupport
 
 ## Directory API
 

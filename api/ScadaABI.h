@@ -15,17 +15,17 @@
 
 namespace Scada::ABI {
 
-    // ApiVersion
-    //  - retrieves highest major API level supported, i.e. when 1 then only Api1 functions are available
+    // ScadaApiVersion
+    //  - retrieves highest major API level supported, i.e. when 1 then only v1 API "Scada" functions are available
     //
-    SCADA_DLL_IMPORT unsigned int ApiVersion () noexcept;
-    SCADA_DLL_IMPORT void ApiDeclareSupport (Scada::Atom) noexcept;
-    SCADA_DLL_IMPORT bool ApiRequireSupport (Scada::Atom) noexcept;
+    SCADA_DLL_IMPORT unsigned int ScadaApiVersion () noexcept;
+    SCADA_DLL_IMPORT void ScadaDeclareSupport (Scada::Atom) noexcept;
+    SCADA_DLL_IMPORT bool ScadaRequireSupport (Scada::Atom) noexcept;
 
-    // ManifoldName
+    // ScadaManifoldName
     //  - 'Atom' name of the current manifold process
     //
-    SCADA_DLL_IMPORT std::uint64_t ManifoldName;
+    SCADA_DLL_IMPORT std::uint64_t ScadaManifoldName;
 }
 
 #include "ScadaABI1Dir.h"

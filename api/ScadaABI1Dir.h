@@ -25,6 +25,26 @@ namespace Scada::ABI {
     SCADA_DLL_IMPORT std::size_t Api1DirCountCells (const Atom * path, std::size_t depth) noexcept;
     SCADA_DLL_IMPORT std::size_t Api1DirCountSubs (const Atom * path, std::size_t depth) noexcept;
 
+    // Api1DirLimits
+    //  - implementation limits of named cell directory
+    //
+    struct Api1DirLimits {
+        std::size_t max_entries; // maximum number of cell entries in one particular directory branch
+        std::size_t max_subdirs; // maximum number of sub branches in one particular directory branch
+        std::size_t max_top_entries; // maximum number of cell entries on top level of directory, NOTE: typically 0
+        std::size_t max_top_dirs;    // maximum number of branches on top level of directory, NOTE: very small
+    };
+
+    // Api1DirGetLimits
+    //  - returns implementation limits of named cell directory
+    //  - only members fitting under 'cb' bytes are set into 'limits' (for backward compatibility if new members are added)
+    //     - call example: Api1DirGetLimits (sizeof (Api1DirLimits), &limits);
+    //     - unknown members (if 'cb' is larger) are memset to 0
+    //  - returns actual size of Api1DirLimits structure
+    //     - 'limits' may be NULL to determine structure version/size
+
+    SCADA_DLL_IMPORT std::size_t Api1DirGetLimits (std::size_t cb, Api1DirLimits * limits = nullptr) noexcept;
+    
     // Api1DirListCellInfo
     //  - 
     //  - NOTE: same as Scada::Directory::Item structure

@@ -16,7 +16,7 @@ namespace Scada {
     //  - empty in primary service process
     //
     inline const Atom & GetManifoldName () noexcept {
-        return *reinterpret_cast <const Atom *> (&ABI::ManifoldName);
+        return *reinterpret_cast <const Atom *> (&ABI::ScadaManifoldName);
     }
 
     // Scada::Access
