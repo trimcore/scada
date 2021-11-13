@@ -5,7 +5,7 @@ Atoms are introduced to significantly reduce number of allocations of string obj
 and for improved performance when searching [Directory](../doc/directory.md) or any other structure with Atom as a key.
 Atoms are compared as simple 64-bit unsigned integers.
 
-**Atom is internally 64-bit value representing either a short string (12 characters max) or an unsigned 63-bit number.**
+**Atom is internally 64-bit value representing either a short string (12 characters max) or unsigned 63-bit number.**
 
 AtomPath in general is a sequence of Atoms used to represent [Directory](directory.md) path, or group of Atoms for other purposes.
 The [API](../api) provides [AtomPath](AtomPath.md) class to simplify path manipulation (see documentation for limits).
@@ -13,7 +13,7 @@ The [API](../api) provides [AtomPath](AtomPath.md) class to simplify path manipu
 ## Usage
 
 Atoms are integral part of API when implementing modules. Names of both cells and directory levels in [Directory](../doc/directory.md)
-use Atoms. Restrictions on Atoms apply when editing [configuration](cfg.md) files, as those simply specify initial contents of the directory.
+are Atoms. Restrictions on Atoms apply when editing [configuration](cfg.md) files, as those simply specify initial contents of the directory.
 
 ## Parsing
 
@@ -24,7 +24,8 @@ Force parsing into string form by enclosing the input in single or double quotes
 
 ## Numbers
 
-Atoms can store any 63-bit unsigned value, i.e.:  0 to 9'223'372'036'854'775'807. Internally the most significant bit is set.
+Atoms can store any 63-bit unsigned value, i.e.:  0 to 9'223'372'036'854'775'807.  
+Internally the most significant bit is set.
 
 Parser supports following prefixes:
 
@@ -36,8 +37,8 @@ Both prefixes suppress later attempts to parse input as string in case numeric p
 
 ## Strings
 
-Strings are encoded by 12 code-points (5-bit). Characters take 1 (lowercase) or 2 (uppercase) code-points.
-Underscores, dashes and spaces are converted to code-point 0x00, and are ignored when trailing.
+Strings are encoded into 12 code-points (5-bit). Characters take 1 (lowercase) or 2 (uppercase) code-points.
+Underscores `_`, dashes `-` and spaces ` ` are converted to code-point 0x00, and are ignored when trailing.
 Internally, the remaining upper 4 bits of the 64-bit value are required to be 0.
 
 Strings can contain only characters a-z, A-Z, 0-9 and space/dash/underscore. These are encoded into code-points as follows:
@@ -77,9 +78,16 @@ z | 0x1B | 5 | 0x01 0x1B
 2 | 0x1E | 8 | 0x01 0x1E
 3 | 0x1F | 9 | 0x01 0x1F
 
-Numbers are by default encoded as numeric Atoms, to force encoding number as  string,
-enclosed the input by single or double quotes. Then the number is stored as
-sequence of code-points. **Warning:** Such way encoded number does not compare equal to regular numeric Atom.
+Numbers are by default encoded as numeric Atoms.
+
+To force encoding a number as a string Atom, enclose the input string by single or double quotes.
+Then the number will be, if possible, stored as sequence of code-points.
+
+**Warning:** Number encoded in this way does NOT compare equal to regular numeric Atom.
+
+## Visual Studio Natvis
+
+[SCADA.natvis](../api/SCADA.natvis)
 
 ## Notes
 
