@@ -1,7 +1,10 @@
 ﻿*TRIM CORE SOFTWARE s.r.o.*
 # ∆ SCADA SYSTEM - Configuring system privileges
 
-TBD: descriptions
+The software is primarily designed to run on dedicated hardware or, with small performance penalty, within dedicated virtual machine.
+To achieve full potential, performance and otherwise, certain additional configuration changes must be performed on the Operating System.
+
+Following system privileges need to be configured:
 
 ## SeLockMemoryPrivilege
 
