@@ -2,16 +2,17 @@
 # ∆ SCADA SYSTEM - Configuration (.cfg) file syntax
 
 The purpose of .cfg files is to pre-create [Directory](directory.md) levels and named Cells, that are,
-upon initialization of the software and loaded modules, used to actually initialize ty system and solution
+upon initialization of the software and loaded modules, used to actually initialize the system and solutions
 it is modeling. After the configuration is loaded, the system is [bootstrapped](boot.md).
 
-First configuration file loaded is **SCADA.cfg** which may reference other files.  
-
-The order of appearance of particular entries is mostly irrelevant. If multiple definitions of a named Cell
-are present, the last Cell retains the name; the former ones can be accessed by Cell ID. If Directory path
-is stated repeatedly, the defined content is merged together.
+First configuration file loaded is **SCADA.cfg** which may reference other files.
 
 ## General
+
+The order of appearance of particular entries is mostly irrelevant, except for direct dependencies and expressions.
+If multiple definitions of a named Cell are present, the last Cell retains the name; the former ones can be accessed by Cell ID.
+If Directory path is stated repeatedly, the defined content is merged together.
+
 Each directive or definition must appear on a separate line.
 
 ### Comments and strings
@@ -38,8 +39,9 @@ interpretation of non-ASCII characters depends on current user/system locale and
 
 ### Nesting configuration files
 
-Configuration files can include other files using `!include file.cfg` directive.  
-Do not use quotes to enclose filenames.
+Configuration files can include other files using `!include "file.cfg"` directive.
+
+Make sure to enclose filename in double quotes `"`.
 
 ### Atoms
 
