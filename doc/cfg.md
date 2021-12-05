@@ -2,15 +2,15 @@
 # ∆ SCADA SYSTEM - Configuration (.cfg) file syntax
 
 The purpose of .cfg files is to pre-create [Directory](directory.md) levels and named Cells, that are,
-upon initialization of the software and loaded modules, used to actually initialize the system and solutions
+upon initialization, used to actually initialize the system and the solutions
 it is modeling. After the configuration is loaded, the system is [bootstrapped](boot.md).
 
 First configuration file loaded is **SCADA.cfg** which may reference other files.
 
 ## General
 
-The order of appearance of particular entries is mostly irrelevant, except for direct dependencies and expressions.
-If multiple definitions of a named Cell are present, the last Cell retains the name; the former ones can be accessed by Cell ID.
+The order of appearance of particular entries is mostly irrelevant, except for direct dependencies and expressions.  
+If multiple definitions of a named Cell are present, the last Cell retains that name; the former ones can only be accessed by Cell ID.  
 If Directory path is stated repeatedly, the defined content is merged together.
 
 Each directive or definition must appear on a separate line.
@@ -27,11 +27,11 @@ To represent double quotes character within a string, double it: `"abc""def"` tu
 
 ### Character set
 
-Loader checks each file for UTF-8 (*EF BB BF*) or UTF-16 LE BOM (*FF FE*).  
+Loader checks each file for leading UTF-8 `EF BB BF` or UTF-16 LE `FF FE` [BOM](https://en.wikipedia.org/wiki/Byte_order_mark).  
 If present, any further charset directive is ignored.
 
 If no BOM is present and the file starts with `!utf-8` directive then UTF-8 is assumed.  
-If the file starts with `!utf-16` directive (in UTF-16 charset) then UTF-16 LE is assumed.
+If the file starts with `!utf-16` directive (in UTF-16 LE encoding) then UTF-16 LE is assumed.
 
 If neither condition is detected, current 8-bit (*ANSI*/*CP_ACP*) code page is assumed, i.e.
 interpretation of non-ASCII characters depends on current user/system locale and settings.
@@ -39,14 +39,13 @@ interpretation of non-ASCII characters depends on current user/system locale and
 
 ### Nesting configuration files
 
-Configuration files can include other files using `!include "file.cfg"` directive.
-
+Configuration files can include other files using `!include "file.cfg"` directive.  
 Make sure to enclose filename in double quotes `"`.
 
 ### Atoms
 
-Both directory path levels and cell definition names are internally stored as [Atoms](atom.md) so
-appropriate restrictions on names apply.
+Configuration names (directory paths and cell names) are internally stored as [Atoms](atom.md).  
+Appropriate restrictions apply.
 
 ## Directory paths
 
