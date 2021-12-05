@@ -8,7 +8,7 @@ This repository contains latest binaries for the SCADA software, usage documenta
 TRIM CORE SCADA Software provides scalable stable transparent high-performance general runtime environment
 for industrial and telecommunication processes. It's a base software for specialized communication solutions.
 
-* [/scada/doc](Detailed documentation...)
+* [Detailed documentation...](doc)
 
 ## Software
 
