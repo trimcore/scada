@@ -3,9 +3,9 @@
 
 Atoms are introduced to significantly reduce number of allocations of string objects and their overhead,
 and for improved performance when searching [Directory](../doc/directory.md) or any other structure with Atom as a key.
-Atoms are compared as simple 64-bit unsigned integers.
+Atoms are internally simple 64-bit unsigned integers, and compare to each other as such.
 
-**Atom is internally 64-bit value representing either a short string (12 characters max) or unsigned 63-bit number.**
+**Atom is internally 64-bit value representing either a short string (13 characters max) or unsigned 63-bit number.**
 
 AtomPath in general is a sequence of Atoms used to represent [Directory](directory.md) path, or group of Atoms for other purposes.
 The [API](../api) provides [AtomPath](AtomPath.md) class to simplify path manipulation (see documentation for limits).
@@ -39,7 +39,6 @@ Both prefixes suppress later attempts to parse input as string in case numeric p
 
 Strings are encoded into 12 code-points (5-bit). Characters take 1 (lowercase) or 2 (uppercase) code-points.
 Underscores `_`, dashes `-` and spaces ` ` are converted to code-point 0x00, and are ignored when trailing.
-Internally, the remaining upper 4 bits of the 64-bit value are required to be 0.
 
 Strings can contain only characters a-z, A-Z, 0-9 and space/dash/underscore. These are encoded into code-points as follows:
 
@@ -78,9 +77,22 @@ z | 0x1B | 5 | 0x01 0x1B
 2 | 0x1E | 8 | 0x01 0x1E
 3 | 0x1F | 9 | 0x01 0x1F
 
+### Remaining bits
+
+Remaining bits have additional interpretation:
+
+Bit | Interpretation
+-|-
+60 | If set, the last code-point is as-if preceeded by 0x01, i.e. uppercase letter or  digit `4` - `9`.
+61 | If the last character is `s` but it wouldn't otherwise fit, 61st bit is set.
+62 | Always 0 *(reserved)*
+63 | Always 0 *(the bit is 1 for numeric atom)*
+
+### Numbers encoded as strings
+
 Numbers are by default encoded as numeric Atoms.
 
-To force encoding a number as a string Atom, enclose the input string by single or double quotes.
+To force a number to be encoded as a string Atom, enclose the input string by single or double quotes.
 Then the number will be, if possible, stored as sequence of code-points.
 
 **Warning:** Number encoded in this way does NOT compare equal to regular numeric Atom.
@@ -89,8 +101,28 @@ Then the number will be, if possible, stored as sequence of code-points.
 
 [SCADA.natvis](../api/SCADA.natvis)
 
+## Atom.exe tool
+
+A simple [Atom.exe](../tools/Atom.exe) tool is provided which can encode or decode Atoms.
+
+**Usage:**
+Pass one or multiple strings to be encoded or Atoms to be decoded as a command-line arguments.
+Add `?` as prefix or suffix to Atom to be decoded.
+
+    C:\> atom.exe "Test"
+    
+    "Test":   0x00000000015a1a61 (Test)  // 00001 10011 'T', 00110 'e', 10100 's', 10101 't'
+    
+    C:\> atom.exe 0x0000000020d698e1?
+    
+    0x0000000020d698e1: "Hello"  // 00001 00111 'H', 00110 'e', 01101 'l', 01101 'l', 10000 'o'
+
+The tool also breaks the string to individual code-points and code-units
+
 ## Notes
 
-TBD: atom.exe tool
+TBD
+
+
 
 
