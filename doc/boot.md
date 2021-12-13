@@ -15,6 +15,8 @@
 * **/settings/manifolds/\<MANIFOLD\>** instantiated to **/manifolds/\<MANIFOLD\>**
   * manifold processes dispatched immediately
 
+* instantiations during initialization do not perform [expression remapping](cfg-expr.md)
+
 ## Manifold processes and Module loading
 
 ...
