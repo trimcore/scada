@@ -18,12 +18,12 @@ CPU ISA
 1 GB of RAM
 * In-memory design requires direct workload including system overhead must fit the memory
 * The intermediate workload is always locked into physical memory (see [Additional Privileges](privileges.md) on how to enable)  
-  *While the software will run without the privilege, this is unsupported scenarion with limited performance.*
+  *While the software will run without the privilege, this is unsupported scenario with limited performance.*
 
 ## Software
 ### Operating System
 
-NT 6.3 kernel-based or newer.  
+Windows NT 6.3 kernel-based or newer.  
 Testing is currently performed on following SKUs:
 
 * [Windows Server](https://www.microsoft.com/cs-cz/windows-server) 2012 R2, 2016, 2019 and 2022
@@ -37,6 +37,13 @@ Testing is currently performed on following SKUs:
 * [14.29 x86-64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_14.29.30037_x86-64.exe)
 * [14.29 x86-32](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_14.29.30037_x86-32.exe)
 * [14.29 AArch64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_14.29.30037_AArch64.exe)
+
+### Installation
+
+Use provided [installer.exe](https://github.com/trimcore/scada/tree/master/exe/installer) tool, to deploy the software as a service.
+
+While the software, for debugging purposes, can be started in console, as an application, this mode offers limited functionality.
+For commercial operation and production, unless specially licensed, the software is supported only when run as a service.
 
 ### TRIMCORE Software Management Service
 
