@@ -20,7 +20,7 @@ for industrial and telecommunication processes. It's a base software for special
 
 * [installer](exe/installer) - generic service installer
 * [atom.exe](https://github.com/trimcore/scada/raw/master/tools/Atom.exe) - converts raw 64-bit atom value to/from string number
-* [Microsoft Visual C++ runtime redistributables](https://github.com/trimcore/scada/tree/master/redist)
+* [Microsoft Visual C++ runtime redistributables](https://github.com/trimcore/redist/tree/master/msvcrt/)
 
 ## Licensing
 
