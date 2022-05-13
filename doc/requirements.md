@@ -31,12 +31,17 @@ Testing is currently performed on following SKUs:
 * [Azure Stack HCI](https://azure.microsoft.com/en-us/products/azure-stack/hci/) 17784 and 20348
 * Windows 8.1, Windows 10 LTSC, Windows 11 - **no support will be provided for deployments on client SKUs**
 
-*NOTE: Consider strong licensing restrictions and limitations that apply to non-Windows SKUs.*
+**NOTE:** Consider strong licensing restrictions and limitations that apply to non-Windows SKUs.
 
-### [Microsoft Visual C++ runtime redistributables](https://github.com/trimcore/scada/tree/master/redist)
-* [14.29 x86-64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_14.29.30037_x86-64.exe)
-* [14.29 x86-32](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_14.29.30037_x86-32.exe)
-* [14.29 AArch64](https://github.com/trimcore/scada/raw/master/redist/msvc_redist_14.29.30037_AArch64.exe)
+*Only system/software administrative tools can be run directly on Hyper-V Server.*  
+*On Azure Stack HCI the license allows to run software only if the particular usage falls within terms of Software Defined Networking*
+
+Consult EULA!
+
+### [Microsoft Visual C++ runtime redistributables](https://github.com/trimcore/redist/tree/main/msvcrt)
+* [14.32 x86-64](https://github.com/trimcore/redist/raw/main/msvcrt/x86-64/msvc_redist_14.32.31326_x64.exe)
+* [14.32 x86-32](https://github.com/trimcore/redist/raw/main/msvcrt/x86-32/msvc_redist_14.32.31326_x86.exe)
+* [14.32 AArch64](https://github.com/trimcore/redist/raw/main/msvcrt/AArch64/msvc_redist_14.32.31326_arm64.exe)
 
 ### Installation
 
