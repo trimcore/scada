@@ -1,6 +1,10 @@
 ﻿*TRIM CORE SOFTWARE s.r.o.*
 # ∆ SCADA SYSTEM - HW/SW Requirements
 
+On startup, the software will check for required CPU/OS features and refuse to continue if the minimal
+requirements are not met. It will also report on presence of features that might be required by certain
+advanced features or future versions.
+
 ## Hardware
 
 CPU ISA
@@ -19,11 +23,14 @@ CPU ISA
 * In-memory design requires direct workload including system overhead must fit the memory
 * The intermediate workload is always locked into physical memory (see [Additional Privileges](privileges.md) on how to enable)  
   *While the software will run without the privilege, this is unsupported scenario with limited performance.*
+* NOTE: Assign memory in multiples of 1 GB for best performance
 
 ## Software
 ### Operating System
 
-Windows NT 6.3 kernel-based or newer.  
+The SCADA Software at minimum requires Windows OS based on NT kernel version **6.3**  
+That corresponds to SKUs **Windows Server 2012 R2**, optionally **Windows 8.1**, and later.
+
 Testing is currently performed on following SKUs:
 
 * [Windows Server](https://www.microsoft.com/cs-cz/windows-server) 2012 R2, 2016, 2019 and 2022
