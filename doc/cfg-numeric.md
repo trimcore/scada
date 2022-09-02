@@ -8,25 +8,28 @@ Lowecase constants true/false are aliases to 1u:1/0u:1 respectively.
 
 ## Syntax
 
-**Integer**:  
-[0b|0o|0x] \# [u|i][k|K|M|G|T] [:[**N**<x|×>][**W**]]
+**Integer**:
 
-**Float**:  
-\#.\# [u|i][k|K|M|G|T] [:[**N**<x|×>][**W**]]
+    [0b|0o|0x] # [u|i][k|K|M|G|T] [:[N<x|×>][W]]
 
-* 0b, 0o, 0x - prefix (integers only) for binary, octal or hexadecimal notation
+**Float**:
+
+    #.# [k|K|M|G|T] [:[N<x|×>][W]]
+
+* `0b`, `0o`, `0x` - prefix (integers only) for binary, octal or hexadecimal notation respectively
 * \#[.\#] - the number, integer or float
-* i - integer is signed (default)
-* u - integer is unsigned (overrides any `i`)
-* k|K|M|G|T - multipliers (e.g.: 1k = 1024, 1M = 1048576)
-* **N** - specifies vector width, default is 1
-* **W** - specifies storage width, in bits; supported widths are: 1, 8, 16, 32, 64 (default) for integers, 32 and 64 for floats
+* `i` - integer is signed (default)
+* `u` - integer is unsigned (overrides any `i`)
+* `k`,`K`,`M`,`G`,`T` - multipliers (e.g.: 1k = 1024, 1M = 1048576, ...)
+* `N` - specifies vector width, default is 1
+* `W` - specifies storage width, in bits; supported widths are: 1, 8, 16, 32, **64 (default)** for integers, 32 and 64 for floats
 
 Limits: Some combinations of parameters are not supported. The loader will log warning.
 
 ## Integers
 
-TBD
+`123` same as `123:64` same as `0x7Bi:1×64` - signed integer  
+`1u` initializes unsigned integer
 
 ## Floats
 
@@ -34,7 +37,9 @@ TBD
 
 ## Vectors
 
-TBD
+To initialize vector...
+
+* Types (integer/unsigned/float) must match.
 
 ## Notes
 
