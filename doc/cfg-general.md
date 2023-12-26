@@ -1,12 +1,10 @@
 ﻿*TRIM CORE SOFTWARE s.r.o.*
 # ∆ SCADA SYSTEM - Configuration - General overview
 
-Each directive or definition must appear on a separate line.
-
-The order of appearance of particular entries in .cfg file is mostly irrelevant. Except for direct dependencies and [expressions](cfg-expr.md).
-
-If multiple definitions of a named Cell are present, the last Cell retains that name; the former ones can only be accessed by Cell ID.  
-If Directory path is stated repeatedly, the defined content is merged together.
+* Each directive or definition must appear on a separate line.
+* The order of appearance of particular entries in .cfg file is mostly irrelevant. Except for direct dependencies, [templates](cfg-template.md) and [expressions](cfg-expr.md).
+* If multiple definitions of a named Cell are present, the last Cell retains that name; the former ones can only be accessed by Cell ID.
+* If Directory path is stated repeatedly, the defined content is merged together.
 
 ## Character set
 

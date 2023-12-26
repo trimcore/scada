@@ -1,27 +1,29 @@
 ﻿*TRIM CORE SOFTWARE s.r.o.*
 # ∆ SCADA SYSTEM - Configuration - String/Binary
 
-TBD: General
-
 ## Strings
 
-Syntax: "text" [storage]
+    value = "text" [storage]
 
 Strings are enclosed by double quotes character: `"string"`  
 To represent double quotes character within a string, double it: `"abc""def"` turns into `abc"def`
 
-The optional `storage` specification defines how the string is stored in memory.
+The optional `storage` specification explicitly defines how the string is stored in memory.
 
 Storage types available (may also be lowercase):
 
 * **UTF-8**
 * **UTF-16**
-* **ASCII** - string is restricted to 7-bit ASCII characters, international characters are skipped
+* **ASCII** - string is restricted to 7-bit ASCII characters, international characters are ignored and skipped
 
-String limits currently stem from 32 byte cell data limit.
+If not explicitly specified, following autodetection rules are used:
+
+* If only ASCII characters are present, ASCII is used.
+* If the string, encoded as UTF-16 fits the 32-byte buffer, UTF-16 is used.
+* If the string, encoded as UTF-8 fits the buffer, UTF-8 is used.
+
+Strings are currently limited to 32 bytes. Longer strings will report error.  
 Strings are assigned directly, the storage type changes dynamically and optionally converted on read.
-
-    TBD example
 
 ## Cell data
 

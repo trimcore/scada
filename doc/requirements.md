@@ -8,10 +8,10 @@ advanced features or future versions.
 ## Hardware
 
 CPU ISA
-* x86-64 - SSE 4.1/CMPXCHG16B
-  * Intel Core/[Penryn](https://en.wikipedia.org/wiki/Penryn_(microarchitecture)) (2008+)
+* x86-64 - AVX (and consequently SSE 4.2/CRC32/CMPXCHG16B)
+  * Intel Core/[Sandy Bridge](https://en.wikipedia.org/wiki/Sandy_Bridge) architecture (2011+)
   * AMD Bulldozer/Jaguar (2011+)
-* x86-32 - SSE 4.1
+* x86-32 - AVX (same as x86-64)
 * AArch64 - ARM v8 CRC32, AES, SHA1, FMAC and NEON vector extensions
   * Qualcomm Snapdragon 835 (2017+)
 
@@ -31,24 +31,24 @@ CPU ISA
 The SCADA Software at minimum requires Windows OS based on NT kernel version **6.3**  
 That corresponds to SKUs **Windows Server 2012 R2**, optionally **Windows 8.1**, and later.
 
-Testing is currently performed on following SKUs:
+Testing is currently performed on following LTSC SKUs:
 
 * [Windows Server](https://www.microsoft.com/cs-cz/windows-server) 2012 R2, 2016, 2019 and 2022
 * [Hyper-V Server](https://www.microsoft.com/en-us/evalcenter/evaluate-hyper-v-server-2019) 2016 and 2019
-* [Azure Stack HCI](https://azure.microsoft.com/en-us/products/azure-stack/hci/) 17784 and 20348
+* [Azure Stack HCI](https://azure.microsoft.com/en-us/products/azure-stack/hci/) 20349
 * Windows 8.1, Windows 10 LTSC, Windows 11 - **no support will be provided for deployments on client SKUs**
 
-**NOTE:** Consider strong licensing restrictions and limitations that apply to non-Windows SKUs.
+**NOTE:** Consider strong licensing restrictions and limitations that apply to non-Windows Server SKUs.
 
 *Only system/software administrative tools can be run directly on Hyper-V Server.*  
-*On Azure Stack HCI the license allows to run software only if the particular usage falls within terms of Software Defined Networking*
+*On Azure Stack HCI the license allows to run software only if the particular usage falls within terms of Software Defined Networking.*
 
 Consult EULA!
 
 ### [Microsoft Visual C++ runtime redistributables](https://github.com/trimcore/redist/tree/main/msvcrt)
-* [14.32 x86-64](https://github.com/trimcore/redist/raw/main/msvcrt/x86-64/msvc_redist_14.32.31326_x64.exe)
-* [14.32 x86-32](https://github.com/trimcore/redist/raw/main/msvcrt/x86-32/msvc_redist_14.32.31326_x86.exe)
-* [14.32 AArch64](https://github.com/trimcore/redist/raw/main/msvcrt/AArch64/msvc_redist_14.32.31326_arm64.exe)
+* [14.38 x86-64](https://github.com/trimcore/redist/raw/main/msvcrt/x86-64/msvc_redist_14.38.33130_x64.exe)
+* [14.38 x86-32](https://github.com/trimcore/redist/raw/main/msvcrt/x86-32/msvc_redist_14.38.33130_x86.exe)
+* [14.38 AArch64](https://github.com/trimcore/redist/raw/main/msvcrt/AArch64/msvc_redist_14.38.33130_arm64.exe)
 
 ### Installation
 
@@ -63,4 +63,3 @@ For commercial operation and production, unless specially licensed, the software
 
 For commercial operation, unless specially licensed, the software requires [TRIMCORE Software Management
 Service](https://github.com/trimcore/service) installed and running with licensing functions enabled.
-

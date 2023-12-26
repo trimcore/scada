@@ -11,10 +11,11 @@ Number of 100-nanosecond intervals since January 1, 1601 (UTC).
 ## Syntax
 
     name = T
+    name = T [2023-12-26 13:55:01.345]
     name = T = [...] // expression
 
-**Limited implementation**: *The configuration format is currently limited to a single `T` which creates Date/Time type cell to be assigned
-value later in code.*
+* date/time specification may contain additional whitespace, but `-` and `:` separators are mandatory
+* time components are optional
 
 ## Cell data
 

@@ -1,7 +1,7 @@
 ﻿*TRIM CORE SOFTWARE s.r.o.*
 # ∆ SCADA SYSTEM
 
-TRIM CORE SCADA Software provides scalable stable transparent high-performance general runtime environment
+TRIM CORE SCADA Software provides stable scalable transparent high-performance general runtime environment
 for industrial and telecommunication processes,
 running both in cloud or on premises. The system features
 isolated (manifold processes, driver modules) design,

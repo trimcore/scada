@@ -58,10 +58,12 @@ First configuration file loaded is **SCADA.cfg** which may reference other files
   * **[Addresses](cfg-address.md)**  
     *communication endpoint addresses, both local and network, e.g.: IP addresses*
 
+* **[Templates](cfg-template.md)**  
+  *define and instantiate template for directory path and contained cells replacing parameters*
+
 * **[Expressions](cfg-expr.md)**  
   *describe short dynamic computations on cell values*
 
 ## Notes
 
-* no macros or automatic replacements are currently supported
 * no protection against endless cycles in files including each other is implemented, file nesting and configuration file sizes are limited only by available memory
