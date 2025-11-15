@@ -8,12 +8,14 @@ advanced features or future versions.
 ## Hardware
 
 CPU ISA
-* x86-64 - AVX (and consequently SSE 4.2/CRC32/CMPXCHG16B)
+* x86-64 - AVX2 (and consequently SSE 4.2/CRC32/CMPXCHG16B)
+  * Intel [Haswell](https://en.wikipedia.org/wiki/Haswell_\(microarchitecture\)) architecture (2013+)
+  * AMD Excavator (2015+)
+* x86-32 - AVX
   * Intel Core/[Sandy Bridge](https://en.wikipedia.org/wiki/Sandy_Bridge) architecture (2011+)
   * AMD Bulldozer/Jaguar (2011+)
-* x86-32 - AVX (same as x86-64)
-* AArch64 - ARM v8 CRC32, AES, SHA1, FMAC and NEON vector extensions
-  * Qualcomm Snapdragon 835 (2017+)
+* AArch64 - ARMv8.2-A (CRC32, AES, LSE and NEON vector extensions) + LRCPC instructions
+  * Qualcomm Snapdragon 850 (2018+)
 
 2 hardware threads
 * 2 cores (or 1 core with HT/SMT), *logical processors* in Windows kernel nomenclature  
@@ -33,9 +35,9 @@ That corresponds to SKUs **Windows Server 2012 R2**, optionally **Windows 8.1**,
 
 Testing is currently performed on following LTSC SKUs:
 
-* [Windows Server](https://www.microsoft.com/cs-cz/windows-server) 2012 R2, 2016, 2019 and 2022
+* [Windows Server](https://www.microsoft.com/cs-cz/windows-server) 2012 R2, 2016, 2019, 2022 and 2025
 * [Hyper-V Server](https://www.microsoft.com/en-us/evalcenter/evaluate-hyper-v-server-2019) 2016 and 2019
-* [Azure Stack HCI](https://azure.microsoft.com/en-us/products/azure-stack/hci/) 20349
+* [Azure Stack HCI](https://azure.microsoft.com/en-us/products/azure-stack/hci/) 20349, 25398 and 26100
 * Windows 8.1, Windows 10 LTSC, Windows 11 - **no support will be provided for deployments on client SKUs**
 
 **NOTE:** Consider strong licensing restrictions and limitations that apply to non-Windows Server SKUs.
@@ -46,9 +48,9 @@ Testing is currently performed on following LTSC SKUs:
 Consult EULA!
 
 ### [Microsoft Visual C++ runtime redistributables](https://github.com/trimcore/redist/tree/main/msvcrt)
-* [14.38 x86-64](https://github.com/trimcore/redist/raw/main/msvcrt/x86-64/msvc_redist_14.38.33130_x64.exe)
-* [14.38 x86-32](https://github.com/trimcore/redist/raw/main/msvcrt/x86-32/msvc_redist_14.38.33130_x86.exe)
-* [14.38 AArch64](https://github.com/trimcore/redist/raw/main/msvcrt/AArch64/msvc_redist_14.38.33130_arm64.exe)
+* [14.44 x86-64](https://github.com/trimcore/redist/raw/main/msvcrt/x86-64/msvc_redist_14.44.35112_x64.exe)
+* [14.44 x86-32](https://github.com/trimcore/redist/raw/main/msvcrt/x86-32/msvc_redist_14.44.35112_x86.exe)
+* [14.44 AArch64](https://github.com/trimcore/redist/raw/main/msvcrt/AArch64/msvc_redist_14.44.35112_arm64.exe)
 
 ### Installation
 
