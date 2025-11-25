@@ -7,94 +7,132 @@
 
 namespace Scada {
 
-    // ObjectSpecializationBase
-    //  - internal inteface for access from specializations to base class
-    //
-    class ObjectSpecializationBase/* : virtual TRIMCORE::Log::Provider*/ {
-    protected:
-        inline void throw_on_failure () const;
-        virtual Cell::Handle GetHandle () const noexcept = 0;
-    };
-
-    template <typename T>
-    class ObjectSpecialization;
-
-    // AccessLevel
-    //  - 
-    //
-    using AccessLevel = ABI::Api1AccessLevel;
+    //template <typename T>
+    //class ObjectSpecialization;
 
     // Object
     //  - 
+    //  - TODO: T[N] and std::vector<T> overloads
     //
     template <typename T>
-    class Object final
-        : virtual ObjectSpecializationBase
-        , public ObjectSpecialization <T> {
-
+    class Object /*final : public ObjectSpecialization <T>*/ {
         Cell::Handle handle;
 
     public:
-        explicit Object (Cell::ID id, AccessLevel level);
-        explicit Object (const AtomPath & path, AccessLevel level);
-
-        Object (const Object & other);
-        Object & operator = (const Object & other);
+        explicit Object (Cell::ID id);
+        explicit Object (const AtomPathView & path);
+        explicit Object (const AtomPathView & path, Atom name);
+        explicit Object (const AtomPathView & path, std::string_view name);
+        explicit Object (const AtomPathView & path, std::wstring_view name);
         ~Object ();
+
+        Object (const Object & other) = delete;
+        Object & operator = (const Object & other) = delete;
 
     public:
         Cell::ID identify () const noexcept;
         
-        void signal () const noexcept {
-            if (!ABI::Api1CellSignal (this->handle)) {
+        void signal () const {
+            if (!ABI::ScadaSignal (this->handle)) {
                 this->throw_on_failure ();
             }
         }
 
-        using ObjectSpecialization <T>::operator =;
+        // using ObjectSpecialization <T>::operator =;
 
         // TODO: implement also as overriding; user inherits from Object<bool>, overrides 'OnChange' and calls 'listen'
-        bool listen (void (*callback) (void * context, Cell::Handle handle, FILETIME t, Cell::Information value), void * context) const noexcept {
-            return ABI::Api1CellListen (this->handle, callback, context);
+
+        bool listen (ABI::ListenCallback callback, void * context) const noexcept {
+            return ABI::ScadaListen (this->handle, callback, context);
         }
         bool valid () const noexcept {
-            auto type = ABI::Api1CellGetDataType (this->handle);
-            return !type.flags.invalid;
+            Cell::Specs specs;
+            if (ABI::ScadaGetCellSpecs (this->handle, &specs)) {
+                return !specs.flags.invalid;
+            } else
+                return false;
+        }
+
+        // get
+        //  -
+        //
+        bool get (T * result, std::size_t index = 0, Cell::Conversion * error = nullptr) const noexcept {
+            Cell::Information information;
+            if (ABI::ScadaGetValue (this->handle, &information)) {
+                auto e = information.to (result, index);
+                if (error) {
+                    *error = e;
+                }
+                return e == Cell::Conversion::Success;
+            } else {
+                if (error) {
+                    *error = Cell::Conversion::NotConversionError;
+                }
+                return false;
+            }
+        }
+
+        bool set (const T & value) noexcept { return this->set_implementation (value, false); }
+        bool update (const T & value) noexcept { return this->set_implementation (value, true); }
+
+        operator T () const {
+            T r;
+            Cell::Conversion e;
+            if (this->get (&r, 0, &e)) {
+                return r;
+            } else
+                throw TRIMCORE::Log::Exception (nullptr, "Scada::Object read failure {1}, error {ERR}", e);
+        }
+
+        Object & operator = (const T & value) {
+            if (!this->set (value))
+                throw TRIMCORE::Log::Exception (nullptr, "Scada::Object set failure, error {ERR}");
+
+            return *this;
         }
 
     private:
         void validate_access ();
-        void validate_access (const AtomPath &);
-        virtual Cell::Handle GetHandle () const noexcept override; // ObjectSpecializationBase
+        void validate_access (const AtomPathView &);
+        void validate_access (const AtomPathView &, Atom);
+
+        inline void throw_on_failure () const {
+            switch (GetLastError ()) {
+                case ERROR_SUCCESS:
+                    return;
+                default:
+                    throw TRIMCORE::Log::Exception (nullptr, "Scada::Object error {ERR}");
+            }
+        }
+
+        bool set_implementation (const T & value, bool update) noexcept {
+            Cell::Information information;
+            if (ABI::ScadaGetCellSpecs (this->handle, &information)) {
+                information.initialize (value);
+                return ABI::ScadaSetValue (this->handle, &information, update ? ABI::UpdateOnChangeOnly : ABI::DefaultSetMode);
+            } else
+                return false;
+        }
     };
 
-
+    /*
     // ObjectSpecialization
     //  - 
 
     template <>
-    class ObjectSpecialization <bool> : virtual ObjectSpecializationBase {
-        //virtual bool ???
-
+    class ObjectSpecialization <bool> {
     protected:
-        ObjectSpecialization & operator = (bool value) {
-            if (!ABI::Api1CellSetBoolean (this->GetHandle (), value)) {
-                this->throw_on_failure ();
-            }
-            return *this;
-        }
-    public:
-        operator bool () const {
-            bool value = false;
-            if (!ABI::Api1CellGetBoolean (this->GetHandle (), &value)) {
-                this->throw_on_failure ();
-            }
-            return value;
+        void assign_to_information (Cell::Information & information, bool value) noexcept {
+            information.flags = Cell::Flags {};
+            information.type = Cell::Type::Unsigned;
+            information.count = 0;
+            information.width = 0;
+            information.uint1 = value;
         }
     };
 
     template <>
-    class ObjectSpecialization <std::uint64_t> : virtual ObjectSpecializationBase {
+    class ObjectSpecialization <std::uint64_t> {
     protected:
         ObjectSpecialization & operator = (std::uint64_t value) {
             if (!ABI::Api1CellSetUnsigned64 (this->GetHandle (), &value, 1u)) {
@@ -102,17 +140,9 @@ namespace Scada {
             }
             return *this;
         }
-    public:
-        operator std::uint64_t () const {
-            std::uint64_t value = 0;
-            if (!ABI::Api1CellGetUnsigned64 (this->GetHandle (), &value, 1u)) {
-                this->throw_on_failure ();
-            }
-            return value;
-        }
     };
     template <>
-    class ObjectSpecialization <std::uint32_t> : virtual ObjectSpecializationBase {
+    class ObjectSpecialization <std::uint32_t> {
     protected:
         ObjectSpecialization & operator = (std::uint64_t value) {
             value &= 0xFFFF'FFFF;
@@ -121,17 +151,9 @@ namespace Scada {
             }
             return *this;
         }
-    public:
-        operator std::uint32_t () const {
-            std::uint64_t value = 0;
-            if (!ABI::Api1CellGetUnsigned64 (this->GetHandle (), &value, 1u)) {
-                this->throw_on_failure ();
-            }
-            return (std::uint32_t) value;
-        }
     };
     template <>
-    class ObjectSpecialization <std::uint16_t> : virtual ObjectSpecializationBase {
+    class ObjectSpecialization <std::uint16_t> {
     protected:
         ObjectSpecialization & operator = (std::uint64_t value) {
             value &= 0xFFFF;
@@ -140,17 +162,9 @@ namespace Scada {
             }
             return *this;
         }
-    public:
-        operator std::uint16_t () const {
-            std::uint64_t value = 0;
-            if (!ABI::Api1CellGetUnsigned64 (this->GetHandle (), &value, 1u)) {
-                this->throw_on_failure ();
-            }
-            return (std::uint16_t) value;
-        }
     };
     template <>
-    class ObjectSpecialization <std::uint8_t> : virtual ObjectSpecializationBase {
+    class ObjectSpecialization <std::uint8_t> {
     protected:
         ObjectSpecialization & operator = (std::uint64_t value) {
             value &= 0xFF;
@@ -159,19 +173,11 @@ namespace Scada {
             }
             return *this;
         }
-    public:
-        operator std::uint8_t () const {
-            std::uint64_t value = 0;
-            if (!ABI::Api1CellGetUnsigned64 (this->GetHandle (), &value, 1u)) {
-                this->throw_on_failure ();
-            }
-            return (std::uint8_t) value;
-        }
     };
     // float
 
     template <>
-    class ObjectSpecialization <float> : virtual ObjectSpecializationBase {
+    class ObjectSpecialization <float> {
     protected:
         ObjectSpecialization & operator = (float value) {
             if (!ABI::Api1CellSetFloat32 (this->GetHandle (), &value, 1u)) {
@@ -179,20 +185,12 @@ namespace Scada {
             }
             return *this;
         }
-    public:
-        operator float () const {
-            float value = 0.0;
-            if (!ABI::Api1CellGetFloat32 (this->GetHandle (), &value, 1u)) {
-                this->throw_on_failure ();
-            }
-            return value;
-        }
     };
 
     // double
 
     template <>
-    class ObjectSpecialization <double> : virtual ObjectSpecializationBase {
+    class ObjectSpecialization <double> {
     protected:
         ObjectSpecialization & operator = (double value) {
             if (!ABI::Api1CellSetFloat64 (this->GetHandle (), &value, 1u)) {
@@ -200,20 +198,12 @@ namespace Scada {
             }
             return *this;
         }
-    public:
-        operator double () const {
-            double value = 0.0;
-            if (!ABI::Api1CellGetFloat64 (this->GetHandle (), &value, 1u)) {
-                this->throw_on_failure ();
-            }
-            return value;
-        }
     };
 
     // string
 
     template <>
-    class ObjectSpecialization <std::string> : virtual ObjectSpecializationBase {
+    class ObjectSpecialization <std::string> {
     protected:
         ObjectSpecialization & operator = (std::string_view sv) {
             if (!ABI::Api1CellSetStringAsv (this->GetHandle (), sv.data (), sv.size ())) {
@@ -221,48 +211,23 @@ namespace Scada {
             }
             return *this;
         }
-    public:
-        operator std::string () const {
-            char buffer [32];
-            auto length = ABI::Api1CellGetStringA (this->GetHandle (), buffer, sizeof buffer);
-            if (length == 0) {
-                this->throw_on_failure ();
-            }
-            return std::string (&buffer [0], &buffer [length]);
-        }
     };
 
     // AtomPath
 
     template <>
-    class ObjectSpecialization <AtomPath> : virtual ObjectSpecializationBase {
+    class ObjectSpecialization <AtomPath> {
     protected:
-        /*ObjectSpecialization & operator = (const AtomPath &) {
+        ObjectSpecialization & operator = (const AtomPath &) {
             // TBD
             return *this;
-        }*/
-    public:
-        AtomPath get () const {
-            AtomPath path;
-            Atom::InvalidInputReason reason;
-            path.depth = ABI::Api1CellConvertToAtoms (this->GetHandle (), path.data (), 65536 / sizeof (Atom), &reason);
-            path.valid = reason == Atom::InvalidInputReason::None;
-            return path;
-        }
-
-        operator AtomPath () const {
-            AtomPath path;
-            Atom::InvalidInputReason reason;
-            path.depth = ABI::Api1CellConvertToAtoms (this->GetHandle (), path.data (), 65536 / sizeof (Atom), &reason);
-            path.valid = reason == Atom::InvalidInputReason::None;
-            return path;
         }
     };
 
     // Manifold::Address
 
     template <>
-    class ObjectSpecialization <Manifold::Address> : virtual ObjectSpecializationBase {
+    class ObjectSpecialization <Manifold::Address> {
     protected:
         ObjectSpecialization & operator = (const Manifold::Address & address) {
             if (!ABI::Api1CellSetAddress (this->GetHandle (), &address)) {
@@ -271,13 +236,6 @@ namespace Scada {
             return *this;
         }
     public:
-        operator Manifold::Address () {
-            Manifold::Address address;
-            if (!ABI::Api1CellGetAddress (this->GetHandle (), &address)) {
-                this->throw_on_failure ();
-            }
-            return address;
-        }
 
         // update
         //  - listeners on Cell of this Object are notified only if 'address' is different from previous one
@@ -303,15 +261,7 @@ namespace Scada {
             }
             return *this;
         }
-    public:
-        operator FILETIME () {
-            FILETIME ft;
-            if (!ABI::Api1CellGetTimeStamp (this->GetHandle (), &ft)) {
-                this->throw_on_failure ();
-            }
-            return ft;
-        }
-    };
+    };*/
 }
 
 // enable TRIMCORE::Log to log Objects

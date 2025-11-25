@@ -3,7 +3,6 @@
 
 namespace Scada::Directory {
 
-
     namespace ImplementationDetails {
         static inline constexpr std::size_t Align (std::size_t n, std::size_t alignment) noexcept {
             return (n + alignment - 1) & ~(alignment - 1);
@@ -24,19 +23,19 @@ namespace Scada::Directory {
         }
 
         template <typename Callback>
-        inline bool TryForEachCell (const AtomPath & path, Callback callback, ABI::Api1DirListCellInfo * buffer, std::size_t & length) {
-            auto n = ABI::Api1DirListCells (path.data (), path.depth, buffer, length);
+        inline bool TryForEachCell (const AtomPathView & path, Callback callback, ABI::CellEntry * buffer, std::size_t & length) {
+            auto n = ABI::ScadaDirEnumCells (path.data (), path.size (), buffer, length);
             return TryForEachCommon (callback, buffer, length, n);
         }
 
         template <typename Callback>
-        inline bool TryForEachSub (const AtomPath & path, Callback callback, Atom * buffer, std::size_t & length) {
-            auto n = ABI::Api1DirListSubs (path.data (), path.depth, buffer, length);
+        inline bool TryForEachSub (const AtomPathView & path, Callback callback, Atom * buffer, std::size_t & length) {
+            auto n = ABI::ScadaDirEnumSubs (path.data (), path.size (), buffer, length);
             return TryForEachCommon (callback, buffer, length, n);
         }
 
         template <typename ItemType, typename Function, typename Callback>
-        inline std::size_t ForEachCommon (const AtomPath & path, Function function, Callback callback) {
+        inline std::size_t ForEachCommon (const AtomPathView & path, Function function, Callback callback) {
 
             // try temporary buffer first (8k Atoms or 4k CellInfos)
 
@@ -64,15 +63,15 @@ namespace Scada::Directory {
     //  - 
     //
     template <typename Callback>
-    inline std::size_t ForEachCell (const AtomPath & path, Callback callback) {
-        return ImplementationDetails::ForEachCommon <ABI::Api1DirListCellInfo> (path, ImplementationDetails::TryForEachCell <Callback>, callback);
+    inline std::size_t ForEachCell (const AtomPathView & path, Callback callback) {
+        return ImplementationDetails::ForEachCommon <ABI::CellEntry> (path, ImplementationDetails::TryForEachCell <Callback>, callback);
     }
 
     // Scada::Directory::ForEachSub
     //  - 
     //
     template <typename Callback>
-    inline std::size_t ForEachSub (const AtomPath & path, Callback callback) {
+    inline std::size_t ForEachSub (const AtomPathView & path, Callback callback) {
         return ImplementationDetails::ForEachCommon <Atom> (path, ImplementationDetails::TryForEachSub <Callback>, callback);
     }
 }
