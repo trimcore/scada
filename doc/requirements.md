@@ -11,8 +11,8 @@ CPU ISA
 * x86-64 - AVX2 (and consequently SSE 4.2/CRC32/CMPXCHG16B)
   * Intel [Haswell](https://en.wikipedia.org/wiki/Haswell_\(microarchitecture\)) architecture (2013+)
   * AMD Excavator (2015+)
-* x86-32 - AVX
-  * Intel Core/[Sandy Bridge](https://en.wikipedia.org/wiki/Sandy_Bridge) architecture (2011+)
+* x86-32 - SSE 4.2 (CRC32) and POPCNT
+  * Intel [Nehalem](https://en.wikipedia.org/wiki/Nehalem_\(microarchitecture\)) architecture (2008+)
   * AMD Bulldozer/Jaguar (2011+)
 * AArch64 - ARMv8.2-A (CRC32, AES, LSE and NEON vector extensions) + LRCPC instructions
   * Qualcomm Snapdragon 850 (2018+)
