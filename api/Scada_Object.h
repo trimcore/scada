@@ -3,7 +3,7 @@
 
 #include <compare>
 #include <string>
-#include "SCADA_AtomPath.hpp"
+#include "..\Scada\SCADA_AtomPath.hpp"
 
 namespace Scada {
 
